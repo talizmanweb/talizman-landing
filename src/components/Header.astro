@@ -1,0 +1,94 @@
+---
+import SevenMark from './SevenMark.astro';
+import { content, type Lang } from '../i18n/content';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = content[lang].nav;
+const home = lang === 'hu' ? '/' : '/en/';
+---
+
+<header class="absolute inset-x-0 top-0 z-20 text-[var(--on-night)]">
+  <div class="wrap flex items-center justify-between gap-4 py-5">
+    <a href={home} class="group flex items-center gap-3 no-underline" aria-label="Talizmán Hetes – főoldal">
+      <SevenMark class="size-10 text-[var(--brass)] transition-transform duration-500 group-hover:rotate-[14deg]" />
+      <span class="font-display text-[1.35rem] leading-none tracking-[-0.01em]">Talizmán Hetes</span>
+    </a>
+
+    <nav aria-label={t.label} class="hidden items-center gap-8 lg:flex">
+      <ul class="flex items-center gap-7 text-[0.95rem]">
+        {t.items.map((i) => (
+          <li>
+            <a
+              href={i.href}
+              class="no-underline opacity-85 transition-opacity hover:underline hover:opacity-100"
+            >
+              {i.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <a
+        href={t.langSwitch.href}
+        hreflang={t.langSwitch.lang}
+        lang={t.langSwitch.lang}
+        class="text-[0.85rem] font-semibold tracking-[0.08em] no-underline opacity-85 hover:opacity-100"
+        aria-label={t.langSwitch.label}
+      >
+        {t.langSwitch.short}
+      </a>
+      <a href="#foglalas" class="btn btn-brass min-h-11 px-5 text-[0.95rem]">
+        {t.book}
+      </a>
+    </nav>
+
+    <div class="flex items-center gap-3 lg:hidden">
+      <a
+        href={t.langSwitch.href}
+        hreflang={t.langSwitch.lang}
+        lang={t.langSwitch.lang}
+        class="grid min-h-11 min-w-11 place-items-center text-[0.85rem] font-semibold tracking-[0.08em] no-underline"
+        aria-label={t.langSwitch.label}
+      >
+        {t.langSwitch.short}
+      </a>
+      <details class="mobile-nav relative">
+        <summary class="grid min-h-11 cursor-pointer list-none place-items-center rounded-full border border-[rgb(244_237_227/0.5)] px-4 text-[0.95rem] font-semibold">
+          {t.menuToggle}
+        </summary>
+        <nav
+          aria-label={t.label}
+          class="absolute right-0 mt-3 w-64 rounded-2xl bg-[var(--night-2)] p-3 shadow-[0_18px_40px_-12px_rgb(0_0_0/0.6)]"
+        >
+          <ul class="grid">
+            {t.items.map((i) => (
+              <li>
+                <a href={i.href} class="block rounded-lg px-4 py-3 no-underline hover:bg-[var(--night-3)]">
+                  {i.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a href="#foglalas" class="btn btn-brass mt-2 w-full">
+            {t.book}
+          </a>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+
+<style>
+  .mobile-nav summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
+
+<script>
+  // Close the mobile menu after choosing a link.
+  document.querySelectorAll<HTMLDetailsElement>('details.mobile-nav').forEach((d) => {
+    d.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => d.removeAttribute('open')));
+  });
+</script>

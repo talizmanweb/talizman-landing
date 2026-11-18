@@ -1,0 +1,70 @@
+---
+import { business, content, type Lang } from '../i18n/content';
+
+interface Props {
+  lang: Lang;
+}
+const t = content[Astro.props.lang].contact;
+---
+
+<section id="kapcsolat" class="section" aria-labelledby="kapcsolat-title">
+  <div class="wrap">
+    <h2 id="kapcsolat-title" class="h-section">
+      {t.title}
+    </h2>
+    <div class="mt-12 grid gap-10 border-t border-[var(--line)] pt-10 md:grid-cols-3 md:gap-12">
+      <div>
+        <h3 class="font-sans text-[0.95rem] font-semibold tracking-[0.04em] text-[var(--accent-text)]">
+          {t.address}
+        </h3>
+        <address class="mt-4 font-display text-[1.6rem] leading-snug not-italic">
+          {`${business.postalCode} ${business.city},`}
+          <br />
+          {business.street}
+        </address>
+        <a
+          href={business.mapsUrl}
+          target="_blank"
+          rel="noopener"
+          class="mt-4 inline-flex min-h-11 items-center gap-2 font-semibold"
+        >
+          {t.route}
+          <svg
+            viewBox="0 0 24 24"
+            class="size-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            aria-hidden="true"
+          >
+            <path d="M7 17 17 7M9 7h8v8"></path>
+          </svg>
+        </a>
+      </div>
+      <div>
+        <h3 class="font-sans text-[0.95rem] font-semibold tracking-[0.04em] text-[var(--accent-text)]">
+          {t.hours}
+        </h3>
+        <dl class="mt-4 grid gap-2">
+          {t.hoursList.map((h) => (
+            <div class="flex justify-between gap-6 border-b border-[var(--line)] pb-2">
+              <dt>{h.days}</dt>
+              <dd class="text-[var(--text-soft)] tabular-nums">{h.time}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <div>
+        <h3 class="font-sans text-[0.95rem] font-semibold tracking-[0.04em] text-[var(--accent-text)]">
+          {t.write}
+        </h3>
+        <a
+          href={`mailto:${business.email}`}
+          class="mt-4 block font-display text-[1.6rem] leading-snug break-all"
+        >
+          {business.email}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

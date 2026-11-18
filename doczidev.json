@@ -1,0 +1,34 @@
+{
+  "name": "Talizmán Hetes",
+  "site": "https://talizman-hetes.pages.dev",
+  "type": "landing",
+  "stack": "astro+tailwind",
+  "hosting": "cloudflare-pages",
+  "lang": "hu",
+  "ogLocale": "hu_HU",
+  "themeColor": "#17110d",
+  "entity": {
+    "type": "LocalBusiness",
+    "sameAs": []
+  },
+  "flags": {
+    "i18n": true,
+    "forms": false,
+    "email": false,
+    "cookies": false,
+    "analytics": "none",
+    "ga4": false,
+    "ads": false,
+    "accounts": false,
+    "ecommerce": false,
+    "api": false,
+    "database": false,
+    "eaa": false,
+    "localBusiness": true,
+    "darkMode": true,
+    "video": false,
+    "print": false,
+    "docs": false,
+    "redesign": false
+  }
+}

@@ -1,0 +1,60 @@
+---
+import { getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Hero from './Hero.astro';
+import About from './About.astro';
+import Restaurant from './Restaurant.astro';
+import Menu from './Menu.astro';
+import Why from './Why.astro';
+import Booking from './Booking.astro';
+import Contact from './Contact.astro';
+import heroPhoto from '../assets/photos/hero-etterem-este.jpg';
+import { business, content, type Lang } from '../i18n/content';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = content[lang];
+const ldImage = await getImage({ src: heroPhoto, width: 1200, format: 'jpg' });
+
+// Restaurant schema. Opening hours are left out until the real ones arrive (see Cserelista).
+const restaurantLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  '@id': `${Astro.site}#restaurant`,
+  name: business.name,
+  legalName: business.legalName,
+  url: new URL(lang === 'hu' ? '/' : '/en/', Astro.site).href,
+  image: new URL(ldImage.src, Astro.site).href,
+  servesCuisine: ['Hungarian'],
+  acceptsReservations: true,
+  email: business.email,
+  taxID: business.taxNumber,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: business.street,
+    postalCode: business.postalCode,
+    addressLocality: business.city,
+    addressCountry: 'HU',
+  },
+  hasMap: business.mapsUrl,
+};
+---
+
+<Base
+  title={t.meta.title}
+  description={t.meta.description}
+  imageAlt={t.meta.ogAlt}
+  lang={lang}
+  alternates={{ hu: '/', en: '/en/' }}
+  jsonLd={[restaurantLd]}
+>
+  <Hero lang={lang} />
+  <About lang={lang} />
+  <Restaurant lang={lang} />
+  <Menu lang={lang} />
+  <Why lang={lang} />
+  <Booking lang={lang} />
+  <Contact lang={lang} />
+</Base>

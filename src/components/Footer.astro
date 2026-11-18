@@ -1,0 +1,70 @@
+---
+import SevenMark from './SevenMark.astro';
+import { business, content, type Lang } from '../i18n/content';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = content[lang].footer;
+const nav = content[lang].nav;
+---
+
+<footer class="night border-t border-[var(--rule-night)]">
+  <div class="wrap grid gap-12 py-16 md:grid-cols-12">
+    <div class="md:col-span-5">
+      <div class="flex items-center gap-3">
+        <SevenMark class="size-11 text-[var(--brass)]" />
+        <span class="font-display text-[1.6rem] leading-none">Talizmán Hetes</span>
+      </div>
+      <p class="mt-4 text-[var(--on-night-soft)]">{t.tagline}</p>
+      <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2">
+        {nav.items.map((i) => (
+          <li>
+            <a href={i.href} class="inline-flex min-h-11 items-center">
+              {i.label}
+            </a>
+          </li>
+        ))}
+        <li>
+          <a
+            href={nav.langSwitch.href}
+            hreflang={nav.langSwitch.lang}
+            lang={nav.langSwitch.lang}
+            class="inline-flex min-h-11 items-center"
+          >
+            {nav.langSwitch.label}
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="text-[0.95rem] text-[var(--on-night-soft)] md:col-span-7 md:justify-self-end">
+      <h2 class="font-sans text-[0.95rem] font-semibold tracking-[0.04em] text-[var(--brass)]">
+        {t.company}
+      </h2>
+      <p class="mt-4 text-[var(--on-night)]">{business.legalName}</p>
+      <dl class="mt-2 grid grid-cols-[auto_1fr] gap-x-6 gap-y-1.5">
+        <dt>{t.seat}</dt>
+        <dd>
+          {business.postalCode} {business.city}, {business.street}
+        </dd>
+        <dt>{t.tax}</dt>
+        <dd class="tabular-nums">{business.taxNumber}</dd>
+        <dt>{t.reg}</dt>
+        <dd class="tabular-nums">{business.companyRegNumber}</dd>
+        <dt>E-mail</dt>
+        <dd>
+          <a href={`mailto:${business.email}`}>{business.email}</a>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="wrap flex flex-wrap items-center justify-between gap-4 border-t border-[var(--rule-night)] py-6 text-[0.85rem] text-[var(--on-night-soft)]">
+    <p>
+      © {new Date().getFullYear()} {business.shortLegalName} · {t.photos}
+    </p>
+    <a href="#top" class="inline-flex min-h-11 items-center">
+      {t.top}
+    </a>
+  </div>
+</footer>

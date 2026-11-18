@@ -1,0 +1,90 @@
+---
+// Head metadata for every page: title, description, canonical, OG, Twitter, JSON-LD.
+// Design-neutral; layouts render <Seo {...} /> inside <head>.
+import site from '../../doczidev.json';
+
+interface Props {
+  title: string; // 30–60 chars, keyword first, brand last
+  description: string; // 120–160 chars
+  image?: string; // 1200×630, path under /public or absolute URL
+  imageAlt?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>[]; // page-specific schema (Article, FAQPage, BreadcrumbList…)
+  lang?: 'hu' | 'en';
+  alternates?: { hu: string; en: string }; // same page per locale → hreflang + x-default (hu)
+}
+
+const {
+  title,
+  description,
+  image = '/og/default.png',
+  imageAlt = site.name,
+  type = 'website',
+  noindex = false,
+  jsonLd = [],
+  lang = 'hu',
+  alternates,
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
+const ogLocales = { hu: 'hu_HU', en: 'en_US' } as const;
+
+const baseLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': site.entity?.type ?? 'Organization',
+    '@id': `${Astro.site}#org`,
+    name: site.name,
+    url: Astro.site?.href,
+    logo: new URL('/logo.svg', Astro.site).href,
+    sameAs: site.entity?.sameAs ?? [],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: site.name,
+    url: Astro.site?.href,
+    inLanguage: lang,
+  },
+];
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex" />}
+{alternates && (
+  <>
+    <link rel="alternate" hreflang="hu" href={new URL(alternates.hu, Astro.site).href} />
+    <link rel="alternate" hreflang="en" href={new URL(alternates.en, Astro.site).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL(alternates.hu, Astro.site).href} />
+  </>
+)}
+
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:locale" content={ogLocales[lang]} />
+{alternates && <meta property="og:locale:alternate" content={ogLocales[lang === 'hu' ? 'en' : 'hu']} />}
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={imageAlt} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content={site.themeColor ?? '#ffffff'} />
+
+{[...baseLd, ...jsonLd].map((ld) => (
+  <script type="application/ld+json" set:html={JSON.stringify(ld).replaceAll('</', '<\\/')} />
+))}

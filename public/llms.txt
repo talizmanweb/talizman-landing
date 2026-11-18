@@ -1,0 +1,12 @@
+# Talizmán Hetes
+
+> A Talizmán Hetes étterem Budapesten (1031 Budapest, Dinamó utca 7.). Friss, gondosan válogatott alapanyagokból készült házias ízek, igényes tálalás, figyelmes kiszolgálás, családias hangulat. Ebédre, vacsorára, baráti találkozóra és családi ünnepre. Üzemeltető: TALIZMÁN HETES Kft.
+
+## Fő oldalak
+
+- [Főoldal](https://talizman-hetes.pages.dev/): rólunk, az étterem, étlap, asztalfoglalás és kapcsolat
+- [English](https://talizman-hetes.pages.dev/en/): the same information in English
+
+## Kapcsolat
+
+- [Kapcsolat](https://talizman-hetes.pages.dev/#kapcsolat): cím, nyitvatartás, asztalfoglalás

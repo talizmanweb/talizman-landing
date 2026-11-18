@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import SevenMark from '../components/SevenMark.astro';
+---
+
+<Base
+  title="Az oldal nem található – Talizmán Hetes"
+  description="Ez az oldal nem létezik. Térj vissza a Talizmán Hetes főoldalára."
+  noindex
+>
+  <section class="night flex min-h-[80svh] items-center pt-28 pb-20">
+    <div class="wrap">
+      <SevenMark class="size-16 text-[var(--brass)]" />
+      <h1 class="mt-8 max-w-[18ch] text-[clamp(2.4rem,6vw,4.5rem)] leading-[1.02]">
+        Ezúttal nem volt szerencsénk: ez az oldal nem létezik.
+      </h1>
+      <p class="mt-6 max-w-[48ch] text-[var(--on-night-soft)]" lang="en">
+        This page does not exist.
+      </p>
+      <div class="mt-10 flex flex-wrap gap-3">
+        <a href="/" class="btn btn-brass">
+          Vissza a főoldalra
+        </a>
+        <a href="/en/" class="btn btn-ghost" hreflang="en" lang="en">
+          English home
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

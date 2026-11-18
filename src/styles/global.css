@@ -1,0 +1,175 @@
+@import 'tailwindcss';
+@import '@fontsource/gloock/latin-400.css';
+@import '@fontsource/gloock/latin-ext-400.css';
+@import '@fontsource-variable/hanken-grotesk/wght.css';
+
+/* Talizmán Hetes tokens. Light linen by day, roasted-brown night; brass only for action and the lucky 7. */
+:root {
+  --linen: #f4ede3;
+  --linen-2: #ebe1d3;
+  --ink: #1e1712;
+  --ink-soft: #54473c;
+  --night: #17110d;
+  --night-2: #211812;
+  --night-3: #2c2119;
+  --on-night: #f4ede3;
+  --on-night-soft: #cbbba7;
+  --brass: #c99a4b;
+  --brass-ink: #855f22; /* brass dark enough for text on linen */
+  --brass-hover: #ddb169;
+  --rule: rgb(30 23 18 / 0.16);
+  --rule-night: rgb(244 237 227 / 0.16);
+
+  --surface: var(--linen);
+  --surface-2: var(--linen-2);
+  --text: var(--ink);
+  --text-soft: var(--ink-soft);
+  --accent-text: var(--brass-ink);
+  --line: var(--rule);
+
+  color-scheme: light dark;
+  accent-color: var(--brass);
+  caret-color: var(--brass);
+  scrollbar-color: var(--brass) var(--night);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: var(--night-2);
+    --surface-2: var(--night-3);
+    --text: var(--on-night);
+    --text-soft: var(--on-night-soft);
+    --accent-text: var(--brass);
+    --line: var(--rule-night);
+  }
+}
+
+@theme {
+  --font-display: 'Gloock', 'Georgia', serif;
+  --font-sans: 'Hanken Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+  --color-linen: #f4ede3;
+  --color-night: #17110d;
+  --color-brass: #c99a4b;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    background: var(--surface);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    font-feature-settings: 'kern', 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--brass);
+    color: var(--night);
+  }
+  :focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  a {
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition:
+      background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn-brass {
+    background: var(--brass);
+    color: var(--night);
+  }
+  .btn-brass:hover {
+    background: var(--brass-hover);
+  }
+  .btn-ghost {
+    border: 1px solid rgb(244 237 227 / 0.55);
+    color: var(--on-night);
+  }
+  .btn-ghost:hover {
+    border-color: var(--on-night);
+    background: rgb(244 237 227 / 0.08);
+  }
+  .btn-outline {
+    border: 1px solid var(--text);
+    color: var(--text);
+  }
+  .btn-outline:hover {
+    background: var(--text);
+    color: var(--surface);
+  }
+  .wrap {
+    width: min(100% - 2rem, 76rem);
+    margin-inline: auto;
+  }
+  @media (min-width: 48rem) {
+    .wrap {
+      width: min(100% - 4rem, 76rem);
+    }
+  }
+  .section {
+    padding-block: clamp(4.5rem, 10vw, 8.5rem);
+  }
+  .h-section {
+    font-size: clamp(2.25rem, 4.6vw, 3.75rem);
+    line-height: 1.05;
+  }
+  .rule {
+    height: 1px;
+    background: var(--line);
+    border: 0;
+  }
+  .night {
+    --text: var(--on-night);
+    --text-soft: var(--on-night-soft);
+    --accent-text: var(--brass);
+    --line: var(--rule-night);
+    background: var(--night);
+    color: var(--on-night);
+  }
+}

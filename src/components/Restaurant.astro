@@ -1,0 +1,37 @@
+---
+import { Picture } from 'astro:assets';
+import dish from '../assets/photos/toltott-kaposzta.jpg';
+import { content, type Lang } from '../i18n/content';
+
+interface Props {
+  lang: Lang;
+}
+const t = content[Astro.props.lang].restaurant;
+---
+
+<section class="section bg-[var(--surface-2)]" aria-labelledby="etterem-title">
+  <div class="wrap grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+    <div class="order-2 lg:order-1 lg:col-span-7">
+      <Picture
+        src={dish}
+        alt={t.imgAlt}
+        widths={[480, 800, 1200, 1600]}
+        sizes="(min-width: 1024px) 44rem, 100vw"
+        formats={['avif', 'webp']}
+        class="aspect-[3/2] w-full rounded-[1.25rem] object-cover"
+      />
+    </div>
+    <div class="order-1 lg:order-2 lg:col-span-5">
+      <h2 id="etterem-title" class="h-section">
+        {t.title}
+      </h2>
+      <ul class="mt-10 border-t border-[var(--line)]">
+        {t.items.map((item) => (
+          <li class="border-b border-[var(--line)] py-5 font-display text-[clamp(1.3rem,2vw,1.6rem)] leading-snug">
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,68 @@
+---
+import { Picture } from 'astro:assets';
+import kettle from '../assets/photos/bogracs-porkolt.jpg';
+import { content, type Lang } from '../i18n/content';
+
+interface Props {
+  lang: Lang;
+}
+const t = content[Astro.props.lang].menu;
+
+// Hungarian price style: "4 690 Ft", with no-break spaces so a price never wraps.
+const nbsp = String.fromCharCode(160);
+const formatPrice = (n: number) => String(n).replace(/([0-9])(?=([0-9]{3})+$)/g, '$1' + nbsp) + nbsp + 'Ft';
+---
+
+<section id="etlap" class="section night" aria-labelledby="etlap-title">
+  <div class="wrap">
+    <div class="grid items-end gap-10 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-6">
+        <h2 id="etlap-title" class="h-section">
+          {t.title}
+        </h2>
+        <p class="mt-6 max-w-[52ch] text-[var(--text-soft)]">{t.lead}</p>
+      </div>
+      <div class="lg:col-span-6">
+        <Picture
+          src={kettle}
+          alt={t.imgAlt}
+          widths={[480, 800, 1200, 1600]}
+          sizes="(min-width: 1024px) 38rem, 100vw"
+          formats={['avif', 'webp']}
+          class="aspect-[16/9] w-full rounded-[1.25rem] object-cover"
+        />
+      </div>
+    </div>
+
+    <div class="mt-16 grid gap-12 md:grid-cols-3 md:gap-10 lg:mt-20">
+      {t.sections.map((s) => (
+        <div>
+          <h3 class="border-b border-[var(--line)] pb-4 font-sans text-[0.95rem] font-semibold tracking-[0.04em] text-[var(--brass)]">
+            {s.title}
+          </h3>
+          <ul class="mt-2">
+            {s.items.map((d) => (
+              <li class="border-b border-[var(--line)] py-5">
+                <div class="flex items-baseline justify-between gap-4">
+                  <p class="font-display text-[1.4rem] leading-tight">{d.name}</p>
+                  <p class="shrink-0 text-[1.05rem] font-semibold whitespace-nowrap text-[var(--brass)] tabular-nums">
+                    {formatPrice(d.price)}
+                  </p>
+                </div>
+                <p class="mt-1.5 text-[0.98rem] text-[var(--text-soft)]">{d.desc}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <p class="mt-8 text-[0.9rem] text-[var(--text-soft)]">{t.priceNote}</p>
+
+    <div class="mt-10">
+      <a href="#foglalas" class="btn btn-brass">
+        {t.book}
+      </a>
+    </div>
+  </div>
+</section>

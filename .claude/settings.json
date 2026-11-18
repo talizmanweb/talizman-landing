@@ -1,0 +1,17 @@
+{
+  "extraKnownMarketplaces": {
+    "dev-claude": {
+      "source": {
+        "source": "directory",
+        "path": "C:/Users/doczit/playground/git/maszek/doczidev-projects/dev-claude"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "doczidev@dev-claude": true
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  }
+}

@@ -1,0 +1,23 @@
+---
+// The talisman mark: a serif 7 inside a thin ring. Decorative unless a label is given.
+interface Props {
+  class?: string;
+  label?: string;
+}
+const { class: className = '', label } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 64 64"
+  fill="none"
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+>
+  <circle cx="32" cy="32" r="29.25" stroke="currentColor" stroke-width="1.5"></circle>
+  <path
+    fill="currentColor"
+    d="M19 15H45V19.5C38.4 27 33.6 36.4 32.2 48.5H26.4C28.2 37.6 33.6 28.2 40.2 20.6H24C22.6 20.6 22 21.6 21.6 24H19Z"
+  ></path>
+</svg>

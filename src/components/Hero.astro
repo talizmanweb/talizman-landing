@@ -1,0 +1,108 @@
+---
+import { Picture } from 'astro:assets';
+import hero from '../assets/photos/hero-etterem-este.jpg';
+import { business, content, type Lang } from '../i18n/content';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = content[lang].hero;
+---
+
+<section
+  class="hero night relative isolate flex min-h-[94svh] items-end overflow-hidden"
+  aria-labelledby="hero-title"
+>
+  <Picture
+    src={hero}
+    alt={t.imgAlt}
+    widths={[640, 960, 1280, 1920, 2400]}
+    sizes="100vw"
+    formats={['avif', 'webp']}
+    loading="eager"
+    fetchpriority="high"
+    class="hero-img absolute inset-0 -z-20 size-full object-cover object-[60%_50%]"
+  />
+  <div class="hero-scrim absolute inset-0 -z-10" aria-hidden="true"></div>
+
+  <div class="wrap hero-copy pt-32 pb-14 sm:pb-20 lg:pb-24">
+    <h1 id="hero-title" class="max-w-[16ch] text-[clamp(2.6rem,7.2vw,6rem)] leading-[0.98]">
+      <span class="block">{t.titleA}</span>
+      <span class="block text-[var(--on-night-soft)]">{t.titleB}</span>
+    </h1>
+    <p class="mt-6 max-w-[44ch] text-[1.125rem] leading-relaxed text-[var(--on-night)] sm:text-[1.2rem]">
+      {t.lead}
+    </p>
+    <div class="mt-9 flex flex-wrap items-center gap-3">
+      <a href="#foglalas" class="btn btn-brass">
+        {t.book}
+      </a>
+      <a href="#etlap" class="btn btn-ghost">
+        {t.menu}
+      </a>
+    </div>
+    <p class="mt-10 flex items-center gap-2.5 text-[0.95rem] text-[var(--on-night-soft)]">
+      <svg
+        viewBox="0 0 24 24"
+        class="size-4 shrink-0 text-[var(--brass)]"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        aria-hidden="true"
+      >
+        <path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z"></path>
+        <circle cx="12" cy="9.5" r="2.5"></circle>
+      </svg>
+      <a href={business.mapsUrl} class="hover:text-[var(--on-night)]" rel="noopener" target="_blank">
+        {`${business.postalCode} ${business.city}, ${business.street}`}
+      </a>
+      <span aria-hidden="true">·</span>
+      <span>{t.where}</span>
+    </p>
+  </div>
+</section>
+
+<style>
+  .hero-scrim {
+    background:
+      linear-gradient(
+        to top,
+        rgb(23 17 13 / 0.94) 0%,
+        rgb(23 17 13 / 0.55) 42%,
+        rgb(23 17 13 / 0.2) 70%,
+        rgb(23 17 13 / 0.55) 100%
+      ),
+      linear-gradient(to right, rgb(23 17 13 / 0.7) 0%, rgb(23 17 13 / 0) 65%);
+  }
+  /* The one authored moment: the room settles into focus while the words rise. Content is visible without it. */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-img {
+      animation: settle 1.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .hero-copy > * {
+      animation: rise 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .hero-copy > :nth-child(2) {
+      animation-delay: 0.12s;
+    }
+    .hero-copy > :nth-child(3) {
+      animation-delay: 0.22s;
+    }
+    .hero-copy > :nth-child(4) {
+      animation-delay: 0.32s;
+    }
+  }
+  @keyframes settle {
+    from {
+      transform: scale(1.06);
+      filter: blur(6px) brightness(0.7);
+    }
+  }
+  @keyframes rise {
+    from {
+      transform: translateY(18px);
+      opacity: 0.001;
+    }
+  }
+</style>
